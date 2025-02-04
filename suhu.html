@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Cuaca</title>
+    <style>
+        #weather-advice {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Widget Cuaca -->
+    <div class="weatherInfo">
+        <div class="currentConditions" mg-show="o.widgetMode.current">
+            <div class="currentTemp ng-binding">22°C</div>
+            <div class="currentDesc ng-binding">light rain</div>
+        </div>
+    </div>
+
+    <a class="weatherwidget-io" href="https://forecast7.com/en/n0d30100d37/bukittinggi-city/" data-label_1="BUKITTINGGI CITY" data-days="3" data-theme="original">BUKITTINGGI CITY</a>
+    <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];
+    if(!d.getElementById(id)){
+        js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+
+    <!-- Elemen p untuk menampilkan saran berdasarkan suhu -->
+    <p id="weather-advice">Mengambil data suhu...</p>
+
+    <script>
+        // Fungsi untuk mengambil data suhu dari widget setelah dimuat
+        function getTemperature() {
+            // Mengambil elemen suhu
+            const tempElement = document.querySelector('.currentTemp.ng-binding');
+            if (tempElement) {
+                // Mengambil teks suhu dan menghapus karakter "°C"
+                const temperatureText = tempElement.textContent;
+                const temperature = parseInt(temperatureText); // Mengubah menjadi angka
+
+                // Memperbarui saran berdasarkan suhu
+                updateAdvice(temperature);
+            } else {
+                console.error("Elemen suhu tidak ditemukan.");
+            }
+        }
+
+        // Fungsi untuk memperbarui saran berdasarkan suhu
+        function updateAdvice(temp) {
+            const adviceElement = document.getElementById('weather-advice');
+
+            if (temp <= 20) {
+                adviceElement.textContent = "Cuaca dingin, cocok untuk makan mie rebus!";
+            } else if (temp > 24) {
+                adviceElement.textContent = "Suhunya panas, lebih baik berteduh!";
+            } else {
+                adviceElement.textContent = "Cuaca cukup nyaman, tetap jaga kesehatan!";
+            }
+        }
+
+        // Mengatur interval untuk memeriksa suhu setiap detik
+        setInterval(getTemperature, 1000); // Ubah menjadi lebih rendah atau lebih tinggi jika diperlukan
+
+    </script>
+
+</body>
+</html>
